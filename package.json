@@ -1,0 +1,37 @@
+{
+  "name": "use-model-validator",
+  "version": "1.0.0",
+  "description": "Simple model validator",
+  "main": "lib/index.js",
+  "source": "src/index.ts",
+  "files": [
+    "lib/"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc",
+    "dev": "tsc --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PetrivskyiTaras/use-model-validator.git"
+  },
+  "keywords": [
+    "model",
+    "validator"
+  ],
+  "author": "PetrivskyiTaras",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/PetrivskyiTaras/use-model-validator/issues"
+  },
+  "peerDependencies": {
+    "react": "^16.13.0"
+  },
+  "homepage": "https://github.com/PetrivskyiTaras/use-model-validator#readme",
+  "devDependencies": {
+    "@types/react": "^17.0.0",
+    "react": "^17.0.1",
+    "typescript": "^4.0.3"
+  }
+}

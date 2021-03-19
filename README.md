@@ -1,13 +1,13 @@
 # use-model-validator
 
-##Simple model validator
+## Simple model validator
 `useModelValidator` is a TypeScript-friendly React hook for validation.
 
-##Install
+## Install
 - `npm install use-model-validator` or
 - `yarn add use-model-validator`
 
-##Usage
+## Usage
 ```jsx harmony
  import React from 'react';
  import useModelValidator, { SupportedValidationTypes, Rules } from 'use-model-validator';

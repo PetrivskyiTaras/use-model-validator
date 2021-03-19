@@ -39,8 +39,8 @@ const App: React.FC = () => {
     };
 
     const rules: Rules<ValidationSchema> = {
-        name: [maxLengthValidator(3, 'Invalid name')] as any,
-        code: [maxLengthValidator(10, 'Invalid code')] as any,
+        name: [maxLengthValidator(3, 'Invalid name')],
+        code: [maxLengthValidator(10, 'Invalid code')],
     };
     const { values, isValid, onValueChange, errors } = useModelValidator<ValidationSchema>(defaultValues, rules);
 

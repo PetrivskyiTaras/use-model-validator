@@ -1,5 +1,3 @@
-# useModelValidator
-
 ## Simple model validator
 `useModelValidator` is a TypeScript-friendly React hook for validation.
 

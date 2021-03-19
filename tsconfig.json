@@ -24,7 +24,8 @@
     "noImplicitThis": true,
     "strictNullChecks": true,
     "outDir": "./lib",
-    "rootDir": "./src"
+    "rootDir": "./src",
+    "declaration": true
   },
   "include": [
     "src"

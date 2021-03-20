@@ -8,7 +8,7 @@
 ## Hook variables
 - `values` - object with all values;
 - `errors` - object with errors;
-- `validate` - validation function;
+- `validate` - validation function `() => boolean`;
 - `onValueChange` - function to set and validate value `(name: keyof ValidationSchema, value: SupportedValidationTypes) => void`;
 - `reset` - reset values and errors to initial data;
 - `setInitialValues` - set initial values function `(model: Partial<ValidationSchema>) => void`;

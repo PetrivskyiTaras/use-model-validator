@@ -1,4 +1,19 @@
 import * as React from 'react';
+import {
+    requireValidator,
+    maxLengthValidator,
+    minLengthValidator,
+    regExpValidator,
+    emailValidator
+} from './validators';
+
+export {
+    requireValidator,
+    maxLengthValidator,
+    minLengthValidator,
+    regExpValidator,
+    emailValidator,
+}
 
 export type SupportedValidationTypes = string | number | undefined | boolean;
 

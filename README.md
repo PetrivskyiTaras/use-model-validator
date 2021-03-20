@@ -5,6 +5,16 @@
 - `npm install use-model-validator` or
 - `yarn add use-model-validator`
 
+## Hook variables
+- `values` - object with all values;
+- `errors` - object with errors;
+- `validate` - validation function `() => boolean`;
+- `onValueChange` - function to set and validate value `(name: keyof ValidationSchema, value: SupportedValidationTypes) => void`;
+- `reset` - reset values and errors to initial data;
+- `setInitialValues` - set initial values function `(model: Partial<ValidationSchema>) => void`;
+- `setValueSilent` - set value without validation `(name: keyof ValidationSchema, value: SupportedValidationTypes) => void`;
+- `isValid` - flag to check if ValidationSchema is valid;
+
 ## Usage
 ```jsx harmony
 import React from 'react';
@@ -81,3 +91,11 @@ const App: React.FC = () => {
 
 export default App;
 ```
+
+## Validators
+You can use some predefined validators:
+- requireValidator `(errorText: string, allowZero = true) => (value: string | number): string`;
+- maxLengthValidator `(max: number, errorText: string) => (value: string | number): string`;
+- minLengthValidator `(min: number, errorText: string) => (value: string | number): string`;
+- regExpValidator `(regx: RegExp, errorText: string) => (value: string): string`;
+- emailValidator `(errorText: string) => (value: string): string`;

@@ -4,22 +4,16 @@ import {
     maxLengthValidator,
     minLengthValidator,
     regExpValidator,
-    emailValidator
+    emailValidator,
 } from './validators';
 
-export {
-    requireValidator,
-    maxLengthValidator,
-    minLengthValidator,
-    regExpValidator,
-    emailValidator,
-}
+export { requireValidator, maxLengthValidator, minLengthValidator, regExpValidator, emailValidator };
 
 export type SupportedValidationTypes = string | number | undefined | boolean;
 
 type ValidationFunction<T> =
-    | { (s: SupportedValidationTypes): string }
-    | { (s: SupportedValidationTypes, values: T): string };
+    | ((s: SupportedValidationTypes) => string)
+    | ((s: SupportedValidationTypes, values: T) => string);
 
 type ModelType = Record<string, SupportedValidationTypes>;
 
@@ -82,7 +76,7 @@ const useModelValidator = <T extends ModelType>(val: T, rules: Rules<T>): Return
             ...validateErr,
         });
 
-        return Object.values(validateErr).every((err) => !err);
+        return Object.values(validateErr).every((validateErrValue: string) => !validateErrValue);
     };
 
     const onValueChange = (name: KeyType<T>, value: SupportedValidationTypes): void => {

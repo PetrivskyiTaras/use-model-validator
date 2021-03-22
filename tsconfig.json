@@ -31,6 +31,10 @@
     "src"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "**/lib/**/*",
+    "**/__tests__/*.test.tsx",
+    "**/__tests__/*.test.ts",
+    "**/__mock__/**/*"
   ]
 }

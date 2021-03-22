@@ -1,5 +1,7 @@
 export const requireValidator = (errorText: string, allowZero = true) => (value: string | number): string => {
-    return typeof value === 'undefined' || value === '' || value === null || (!allowZero && value === 0) ? errorText : '';
+    return typeof value === 'undefined' || value === '' || value === null || (!allowZero && value === 0)
+        ? errorText
+        : '';
 };
 
 export const maxLengthValidator = (max: number, errorText: string) => (value: string | number): string => {

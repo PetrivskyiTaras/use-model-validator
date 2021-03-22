@@ -1,5 +1,5 @@
 ## Simple model validator
-`useModelValidator` is a TypeScript-friendly React hook for validation.
+`useModelValidator` is a TypeScript-friendly React hook for simple validation.
 
 ## Install
 - `npm install use-model-validator` or
@@ -14,6 +14,14 @@
 - `setInitialValues` - set initial values function `(model: Partial<ValidationSchema>) => void`;
 - `setValueSilent` - set value without validation `(name: keyof ValidationSchema, value: SupportedValidationTypes) => void`;
 - `isValid` - flag to check if ValidationSchema is valid;
+
+## Supported Field Value Types (SupportedValidationTypes)
+- string
+- boolean
+- number
+- undefined
+
+(plan to make wider this list)
 
 ## Usage
 ```jsx harmony
@@ -99,3 +107,7 @@ You can use some predefined validators:
 - minLengthValidator `(min: number, errorText: string) => (value: string | number): string`;
 - regExpValidator `(regx: RegExp, errorText: string) => (value: string): string`;
 - emailValidator `(errorText: string) => (value: string): string`;
+
+```javascript
+import { validatorName } from 'use-model-validator';
+```

@@ -1,11 +1,13 @@
 {
   "name": "use-model-validator",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Simple model validator",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "source": "src/index.ts",
-  "files": ["lib/**/*"],
+  "files": [
+    "lib/**/*"
+  ],
   "scripts": {
     "test": "jest --config jestconfig.json",
     "build": "tsc",

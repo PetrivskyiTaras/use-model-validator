@@ -9,7 +9,7 @@ import {
 
 export { requireValidator, maxLengthValidator, minLengthValidator, regExpValidator, emailValidator };
 
-export type SupportedValidationTypes = string | number | undefined | boolean;
+export type SupportedValidationTypes = string | number | undefined | boolean | null;
 
 type ValidationFunction<T> =
     | ((s: SupportedValidationTypes) => string)
@@ -26,6 +26,8 @@ interface ReturnData<T> {
     setInitialValues: (values: Partial<T>) => void;
     reset: () => void;
     isValid: boolean;
+    onValuesChange: (model: Partial<T>) => void;
+    setValuesSilent: (model: Partial<T>) => void;
 }
 
 type ValidationErrors<T> = Partial<Record<keyof T, string>>;
@@ -49,7 +51,7 @@ const useModelValidator = <T extends ModelType>(val: T, rules: Rules<T>): Return
     const initialValues: T = Object.freeze({ ...val });
     const initialErrors: ValidationErrors<T> = Object.freeze({ ...err });
 
-    const validateValue = (name: KeyType<T>, value: SupportedValidationTypes): string => {
+    const _validateValue = (name: KeyType<T>, value: SupportedValidationTypes): string => {
         const validators: ValidationFunction<T>[] | undefined = rules[name];
         if (!!validators && validators.length > 0) {
             const messages = validators.map((validator) => validator(value, values)).filter((e) => !!e);
@@ -61,19 +63,20 @@ const useModelValidator = <T extends ModelType>(val: T, rules: Rules<T>): Return
         return '';
     };
 
-    const validate = (): boolean => {
+    const _getValidateDataErrors = (validateData: Partial<T>): ValidationErrors<T> => {
         const validateErr: ValidationErrors<T> = {};
-        Object.entries(values).forEach((arg) => {
+        Object.entries(validateData).forEach((arg) => {
             const key: KeyType<T> = arg[0];
             const value: SupportedValidationTypes = arg[1];
-            const errorMessage = validateValue(key, value);
-            if (!!errorMessage) {
-                validateErr[key] = errorMessage;
-            }
+            validateErr[key] = _validateValue(key, value);
         });
-        setErrors({
-            ...errors,
-            ...validateErr,
+        return validateErr;
+    };
+
+    const validate = (): boolean => {
+        const validateErr: ValidationErrors<T> = _getValidateDataErrors(values);
+        setErrors((prevErrors: ValidationErrors<T>) => {
+            return { ...prevErrors, ...validateErr };
         });
 
         return Object.values(validateErr).every((validateErrValue: string) => !validateErrValue);
@@ -82,16 +85,17 @@ const useModelValidator = <T extends ModelType>(val: T, rules: Rules<T>): Return
     const onValueChange = (name: KeyType<T>, value: SupportedValidationTypes): void => {
         setValues((prevValues: T) => ({ ...prevValues, [name]: value }));
 
-        const errMsg = validateValue(name, value);
-        if (!!errMsg) {
-            setErrors((prevErrors: ValidationErrors<T>) => {
-                return { ...prevErrors, [name]: errMsg };
-            });
-        } else if (!!errors[name]) {
-            setErrors((prevErrors: ValidationErrors<T>) => {
-                return { ...prevErrors, [name]: '' };
-            });
-        }
+        setErrors((prevErrors: ValidationErrors<T>) => {
+            return { ...prevErrors, [name]: _validateValue(name, value) };
+        });
+    };
+
+    const onValuesChange = (model: Partial<T>): void => {
+        setValues((prevValues: T) => ({ ...prevValues, ...model }));
+
+        setErrors((prevErrors: ValidationErrors<T>) => {
+            return { ...prevErrors, ..._getValidateDataErrors(model) };
+        });
     };
 
     const reset = (): void => {
@@ -103,6 +107,13 @@ const useModelValidator = <T extends ModelType>(val: T, rules: Rules<T>): Return
         setValues((v) => ({
             ...v,
             [prop]: value,
+        }));
+    };
+
+    const setValuesSilent = (model: Partial<T>): void => {
+        setValues((v) => ({
+            ...v,
+            ...model,
         }));
     };
 
@@ -120,6 +131,8 @@ const useModelValidator = <T extends ModelType>(val: T, rules: Rules<T>): Return
         setInitialValues,
         setValueSilent,
         isValid,
+        onValuesChange,
+        setValuesSilent,
     };
 };
 

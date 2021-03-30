@@ -27,10 +27,17 @@ const App: React.FC<Props> = ({ callback }) => {
         code: [maxLengthValidator(10, 'Invalid code')],
     };
     const [submitted, setSubmitted] = useState(false);
-    const { values, onValueChange, errors, validate, reset, setValueSilent } = useModelValidator<ValidationSchema>(
-        defaultValues,
-        rules
-    );
+    const {
+        values,
+        onValueChange,
+        errors,
+        validate,
+        reset,
+        setValueSilent,
+        onValuesChange,
+        setValuesSilent,
+        isValid
+    } = useModelValidator<ValidationSchema>(defaultValues, rules);
 
     const onChangeName = (e: React.ChangeEvent<HTMLInputElement>) => {
         onValueChange('name', e.target.value);
@@ -46,6 +53,27 @@ const App: React.FC<Props> = ({ callback }) => {
 
     const setNameSilent = () => {
         setValueSilent('name', 'incorrect long value');
+    };
+
+    const setValidNameAndCode = () => {
+        onValuesChange({
+            name: 'name',
+            code: 5,
+        });
+    };
+
+    const setInvalidNameAndCode = () => {
+        onValuesChange({
+            name: 'name long name',
+            code: 20,
+        });
+    };
+
+    const setInvalidNameAndCodeSilent = () => {
+        setValuesSilent({
+            name: 'name long name',
+            code: 20,
+        });
     };
 
     const onSubmit = (e: React.ChangeEvent<HTMLFormElement>) => {
@@ -75,7 +103,7 @@ const App: React.FC<Props> = ({ callback }) => {
                         </span>
                     )}
                     <input role="is-active" type="checkbox" checked={values.isActive} onChange={onChangeIsActive} />
-                    <input type="submit" value="Submit form" />
+                    <input role="submit-button" type="submit" value="Submit form" disabled={!isValid} />
                     {(!!errors.code || !!errors.name) && (
                         <span role="form-errors" data-testid="form-errors">
                             {'From is not valid'}
@@ -86,6 +114,9 @@ const App: React.FC<Props> = ({ callback }) => {
             {submitted && <h1>{'Form is submitted, please reload the page'}</h1>}
             <button role="reset-button" onClick={reset} value="Reset values" />
             <button role="set-name-silent" onClick={setNameSilent} value="Reset values" />
+            <button role="set-valid-name-and-code" onClick={setValidNameAndCode} value="Set Name and Code" />
+            <button role="set-invalid-name-and-code" onClick={setInvalidNameAndCode} value="Set Invalid Name and Code" />
+            <button role="set-invalid-name-and-code-silent" onClick={setInvalidNameAndCodeSilent} value="Set Name and Code Silent" />
         </div>
     );
 };

@@ -6,16 +6,16 @@
 - `yarn add use-model-validator`
 
 ## Hook variables
-- `values` - object with all values;
-- `errors` - object with errors;
-- `validate` - validation function `() => boolean`, set errors if exist;
-- `onValueChange` - function to set and validate value `(name: keyof ValidationSchema, value: SupportedValidationTypes) => void`;
-- `onValuesChange` - function to set and validate multiple values `(model: Partial<ValidationSchema>) => void`;
-- `reset` - reset values and errors to initial data;
-- `setInitialValues` - set initial values function `(model: Partial<ValidationSchema>) => void`;
-- `setValueSilent` - set value without validation `(name: keyof ValidationSchema, value: SupportedValidationTypes) => void`;
-- `setValuesSilent` - set multiple values without validation `(model: Partial<ValidationSchema>) => void`;
-- `isValid` - flag to indicate if Validation Schema is valid, at the beginning initialize as `true` until the first error occurred.
+- **`values`** - object with all values;
+- **`errors`** - object with errors;
+- **`validate`** - validation function `() => boolean`, set errors if exist;
+- **`onValueChange`** - function to set and validate value `(name: keyof ValidationSchema, value: SupportedValidationTypes) => void`;
+- **`onValuesChange`** - function to set and validate multiple values `(model: Partial<ValidationSchema>) => void`;
+- **`reset`** - reset values and errors to initial data;
+- **`setInitialValues`** - set initial values function `(model: Partial<ValidationSchema>) => void`;
+- **`setValueSilent`** - set value without validation `(name: keyof ValidationSchema, value: SupportedValidationTypes) => void`;
+- **`setValuesSilent`** - set multiple values without validation `(model: Partial<ValidationSchema>) => void`;
+- **`isValid`** - flag to indicate if Validation Schema is valid, at the beginning initialize as `true` until the first error occurred.
 
 ## Supported Field Value Types (SupportedValidationTypes)
 - string
@@ -114,7 +114,6 @@ interface FormData {
     code: string;
 }
 
-// type for validation schema
 interface ValidationSchema extends FormData {
     [key: string]: SupportedValidationTypes;
 }
@@ -132,16 +131,12 @@ const MultipleValuesApp: React.FC = () => {
     const { values, onValueChange, onValuesChange, errors, validate } = useModelValidator<ValidationSchema>(defaultValues, rules);
 
     const onChangeName = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (!values.code) {
-            const val = e.target.value;
-            // set multiple values
-            onValuesChange({
-                name: val,
-                code: val.split(' ').map((item: string) => item.charAt(0)).join('').toUpperCase(),
-            });
-        } else {
-            onValueChange('name', e.target.value);
-        }           
+        const val = e.target.value;
+        // set multiple values
+        onValuesChange({
+            name: val,
+            code: val.split(' ').map((item: string) => item.charAt(0)).join('').toUpperCase(),
+        });
     };
 
     const onChangeCode = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -153,9 +148,6 @@ const MultipleValuesApp: React.FC = () => {
         const isFormValid = validate();
         if (isFormValid) {
             // send request to server
-            console.table(values);
-        } else {
-            console.table(errors);
         }
     };
   return (
@@ -176,12 +168,13 @@ export default MultipleValuesApp;
 
 ## Validators
 You can use some predefined validators:
-- requireValidator `(errorText: string, allowZero = true) => (value: string | number): string`;
-- maxLengthValidator `(max: number, errorText: string) => (value: string | number): string`;
-- minLengthValidator `(min: number, errorText: string) => (value: string | number): string`;
-- regExpValidator `(regx: RegExp, errorText: string) => (value: string): string`;
-- emailValidator `(errorText: string) => (value: string): string`;
+- **requireValidator** `(errorText: string, allowZero = true) => (value: string | number): string`;
+- **maxLengthValidator** `(max: number, errorText: string) => (value: string | number): string`;
+- **minLengthValidator** `(min: number, errorText: string) => (value: string | number): string`;
+- **regExpValidator** `(regx: RegExp, errorText: string) => (value: string): string`;
+- **emailValidator** `(errorText: string) => (value: string): string`;
 
+### Validators Import
 ```javascript
-import { validatorName } from 'use-model-validator';
+import { requireValidator } from 'use-model-validator';
 ```

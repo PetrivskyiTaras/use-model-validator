@@ -1,3 +1,5 @@
+![Main branch tests status](https://github.com/PetrivskyiTaras/use-model-validator/actions/workflows/tests.yml/badge.svg?branch=main)
+
 ## Simple model validator
 `useModelValidator` is a TypeScript-friendly React hook for simple validation.
 

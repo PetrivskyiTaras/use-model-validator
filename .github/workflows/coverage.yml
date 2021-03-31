@@ -12,10 +12,11 @@ on:
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
 
     strategy:
       matrix:
+        os: [ubuntu-latest]
         node-version: [14.x]
 
     steps:
@@ -25,8 +26,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - run: npm ci
-    - run: npm run build --if-present
-    - run: npm run test:coverage
+    - run: npm t
     # Only run the coverage once
     - if: ${{ matrix.node-version == '14.x' }}
       name: Get Coverage for badge
@@ -47,7 +47,6 @@ jobs:
         TOKENS=($SUMMARY)
         # process.env.COVERAGE = '31.93%';
         echo "COVERAGE=$(echo ${TOKENS[2]})" >> $GITHUB_ENV
-
         # var REF = 'refs/pull/27/merge.json';
         REF=${{ github.ref }}
         # console.log('github.ref: ' + REF);

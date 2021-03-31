@@ -210,6 +210,5 @@ describe('useModelValidator tests', () => {
 
         expect(queryByTestId('name-error')).not.toBeNull();
         expect(getByRole('submit-button').closest('input')?.disabled).toBeTruthy();
-
     });
 });

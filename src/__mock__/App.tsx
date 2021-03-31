@@ -36,7 +36,7 @@ const App: React.FC<Props> = ({ callback }) => {
         setValueSilent,
         onValuesChange,
         setValuesSilent,
-        isValid
+        isValid,
     } = useModelValidator<ValidationSchema>(defaultValues, rules);
 
     const onChangeName = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -115,8 +115,16 @@ const App: React.FC<Props> = ({ callback }) => {
             <button role="reset-button" onClick={reset} value="Reset values" />
             <button role="set-name-silent" onClick={setNameSilent} value="Reset values" />
             <button role="set-valid-name-and-code" onClick={setValidNameAndCode} value="Set Name and Code" />
-            <button role="set-invalid-name-and-code" onClick={setInvalidNameAndCode} value="Set Invalid Name and Code" />
-            <button role="set-invalid-name-and-code-silent" onClick={setInvalidNameAndCodeSilent} value="Set Name and Code Silent" />
+            <button
+                role="set-invalid-name-and-code"
+                onClick={setInvalidNameAndCode}
+                value="Set Invalid Name and Code"
+            />
+            <button
+                role="set-invalid-name-and-code-silent"
+                onClick={setInvalidNameAndCodeSilent}
+                value="Set Name and Code Silent"
+            />
         </div>
     );
 };

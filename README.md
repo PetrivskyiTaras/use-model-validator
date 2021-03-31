@@ -9,16 +9,16 @@
 - `yarn add use-model-validator`
 
 ## Hook variables
-- **`values`** - object with all values;
-- **`errors`** - object with errors;
+- **`values`** - represents validation scheme type and keeps values of the every single field;
+- **`errors`** - represents validation scheme type and keeps errors of the every single field;
 - **`validate`** - validation function `() => boolean`, set errors if exist;
-- **`onValueChange`** - function to set and validate value `(name: keyof ValidationSchema, value: SupportedValidationTypes) => void`;
+- **`onValueChange`** - function to set and validate single value `(name: keyof ValidationSchema, value: SupportedValidationTypes) => void`;
 - **`onValuesChange`** - function to set and validate multiple values `(model: Partial<ValidationSchema>) => void`;
 - **`reset`** - reset values and errors to initial data;
 - **`setInitialValues`** - set initial values function `(model: Partial<ValidationSchema>) => void`;
 - **`setValueSilent`** - set value without validation `(name: keyof ValidationSchema, value: SupportedValidationTypes) => void`;
 - **`setValuesSilent`** - set multiple values without validation `(model: Partial<ValidationSchema>) => void`;
-- **`isValid`** - flag to indicate if Validation Schema is valid, at the beginning initialize as `true` until the first error occurred.
+- **`isValid`** - flag to indicate if Validation Schema is valid, at the beginning initialized as `true` until the first error occurred.
 
 ## Supported Field Value Types (SupportedValidationTypes)
 - string

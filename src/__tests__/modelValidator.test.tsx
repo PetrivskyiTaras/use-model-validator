@@ -107,4 +107,109 @@ describe('useModelValidator tests', () => {
         expect(getByRole('form')).toBeDefined();
         expect(callback).toHaveBeenCalledWith(false);
     });
+
+    it('should set valid multiple values name and code and submit form', () => {
+        const { queryByTestId, getByRole } = render(<App callback={callback} />);
+
+        expect(queryByTestId('name-error')).toBeNull();
+        expect(queryByTestId('code-error')).toBeNull();
+        expect(queryByTestId('form-errors')).toBeNull();
+
+        fireEvent.click(getByRole('set-valid-name-and-code'));
+        // errors is not appeared
+        expect(queryByTestId('name-error')).toBeNull();
+        expect(queryByTestId('code-error')).toBeNull();
+        expect(queryByTestId('form-errors')).toBeNull();
+
+        fireEvent.submit(getByRole('form'));
+
+        expect(queryByTestId('form-errors')).toBeNull();
+        expect(queryByTestId('form')).toBeNull();
+    });
+
+    it('should set invalid multiple values name and code and do not submit form', () => {
+        const { queryByTestId, getByRole } = render(<App callback={callback} />);
+
+        expect(queryByTestId('name-error')).toBeNull();
+        expect(queryByTestId('code-error')).toBeNull();
+        expect(queryByTestId('form-errors')).toBeNull();
+
+        fireEvent.click(getByRole('set-invalid-name-and-code'));
+        // errors appeared
+        expect(queryByTestId('name-error')).not.toBeNull();
+        expect(queryByTestId('code-error')).not.toBeNull();
+        expect(queryByTestId('form-errors')).not.toBeNull();
+
+        fireEvent.submit(getByRole('form'));
+
+        expect(queryByTestId('form-errors')).not.toBeNull();
+        expect(getByRole('form')).toBeDefined();
+        expect(callback).toHaveBeenCalledWith(false);
+    });
+
+    it('should clear errors if exist on multiple values change', () => {
+        const { queryByTestId, getByRole } = render(<App callback={callback} />);
+
+        expect(queryByTestId('name-error')).toBeNull();
+        expect(queryByTestId('code-error')).toBeNull();
+        expect(queryByTestId('form-errors')).toBeNull();
+
+        fireEvent.change(getByRole('name'), { target: { value: 'name long invalid name' } });
+        fireEvent.change(getByRole('code'), { target: { value: 20 } });
+        // errors appeared
+        expect(queryByTestId('name-error')).not.toBeNull();
+        expect(queryByTestId('code-error')).not.toBeNull();
+        expect(queryByTestId('form-errors')).not.toBeNull();
+
+        fireEvent.click(getByRole('set-valid-name-and-code'));
+
+        expect(queryByTestId('name-error')).toBeNull();
+        expect(queryByTestId('code-error')).toBeNull();
+        expect(queryByTestId('form-errors')).toBeNull();
+    });
+
+    it('should set invalid multiple values name and code silent and do not show errors', () => {
+        const { queryByTestId, getByRole } = render(<App callback={callback} />);
+
+        expect(queryByTestId('name-error')).toBeNull();
+        expect(queryByTestId('code-error')).toBeNull();
+        expect(queryByTestId('form-errors')).toBeNull();
+
+        fireEvent.click(getByRole('set-invalid-name-and-code-silent'));
+        // errors not appeared
+        expect(queryByTestId('name-error')).toBeNull();
+        expect(queryByTestId('code-error')).toBeNull();
+        expect(queryByTestId('form-errors')).toBeNull();
+
+        fireEvent.submit(getByRole('form'));
+
+        // errors appeared after submit
+        expect(queryByTestId('name-error')).not.toBeNull();
+        expect(queryByTestId('code-error')).not.toBeNull();
+        expect(queryByTestId('form-errors')).not.toBeNull();
+    });
+
+    it('should correct set isValid flag if field is invalid', () => {
+        const { queryByTestId, getByRole } = render(<App callback={callback} />);
+
+        expect(getByRole('submit-button').closest('input')?.disabled).toBeFalsy();
+        expect(queryByTestId('name-error')).toBeNull();
+
+        fireEvent.change(getByRole('name'), { target: { value: 'name long invalid name' } });
+        expect(queryByTestId('name-error')).not.toBeNull();
+        expect(getByRole('submit-button').closest('input')?.disabled).toBeTruthy();
+    });
+
+    it('should correct set isValid flag if fields did not change', () => {
+        const { queryByTestId, getByRole } = render(<App callback={callback} />);
+
+        expect(getByRole('submit-button').closest('input')?.disabled).toBeFalsy();
+        expect(queryByTestId('name-error')).toBeNull();
+
+        fireEvent.submit(getByRole('form'));
+
+        expect(queryByTestId('name-error')).not.toBeNull();
+        expect(getByRole('submit-button').closest('input')?.disabled).toBeTruthy();
+
+    });
 });

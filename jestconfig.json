@@ -8,5 +8,10 @@
   "testPathIgnorePatterns": [
     "/node_modules/",
     "/__mock__/"
+  ],
+  "collectCoverageFrom": [
+    "**/*.{ts,tsx}",
+    "!**/__mock__/**",
+    "!**/node_modules/**"
   ]
 }

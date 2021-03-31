@@ -10,7 +10,7 @@
   ],
   "scripts": {
     "test": "jest --config jestconfig.json",
-    "test:coverage": "jest --config jestconfig.json --coverage",
+    "test:coverage": "jest --config jestconfig.json --coverage --reporter=lcov",
     "build": "tsc",
     "dev": "tsc --watch",
     "format": "prettier --write \"src/**/*.ts\" \"src/**/*.tsx\"",

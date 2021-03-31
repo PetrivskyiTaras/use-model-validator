@@ -63,6 +63,7 @@ jobs:
     - if: ${{ matrix.node-version == '14.x' }}
       name: Create the Badge
       uses: schneegans/dynamic-badges-action@v1.0.0
+      echo: $COVERAGE
       with:
         auth: ${{ secrets.GIST_SECRET }}
         gistID: 19ff0745002cd9d7962345032e687efb

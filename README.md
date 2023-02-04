@@ -2,7 +2,7 @@
 ![Coverage Badge](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/PetrivskyiTaras/19ff0745002cd9d7962345032e687efb/raw/use-model-validator__heads_main.json)
 
 ## Simple model validator
-`useModelValidator` is a TypeScript-friendly React hook for simple validation.
+`useModelValidator` is a TypeScript-friendly React hook for simple validation
 
 ## Install
 - `npm install use-model-validator` or
